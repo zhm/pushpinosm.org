@@ -5,14 +5,19 @@ window.onload = function() {
   map.ui.zoomer.add();
   map.ui.zoombox.add();
 
-  var query = "[out:json];(node[source='Pushpin for iOS'];);(node[source='Fulcrum OSM for iOS'];);out;";
+  var query = "[out:json];(node[source~'Pushpin|Fulcrum'];);out meta;";
   var url = "http://www.overpass-api.de/api/interpreter?data=" + window.encodeURIComponent(query);
+
+  console.log(url);
 
   $.get(url, function(json) {
     if (json) {
       $('.page-title').html('Pushpin OSM - ' + json.elements.length + ' points');
       var features = [];
+      json.elements = _.last(json.elements, 300);
+
       _.each(json.elements, function(element) {
+        element.tags['username'] = element.user;
         features.push({
           geometry: { type: 'Point', coordinates: [ element.lon, element.lat ] },
           properties: { 'marker-color': '#c70000', element: element }
@@ -24,7 +29,10 @@ window.onload = function() {
         var html = '';
         for (prop in feature.properties.element.tags) {
           if (prop != 'source')
-            html += prop + ': ' + feature.properties.element.tags[prop] + '<br />';
+            if (prop !== 'username')
+              html += prop + ': ' + feature.properties.element.tags[prop] + '<br />';
+            else
+              html += 'User: <a href="http://www.openstreetmap.org/user/' + feature.properties.element.tags[prop] + '/edits" target="_blank">' + feature.properties.element.tags[prop] + '</a>';
         }
         return html;
       });
