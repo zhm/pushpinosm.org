@@ -5,7 +5,7 @@ window.onload = function() {
   map.ui.zoomer.add();
   map.ui.zoombox.add();
 
-  var query = "[out:json];(node[source~'Pushpin|Fulcrum'];);out meta;";
+  var query = "[out:json];(node[source~'Pushpin'];);out meta;";
   var url = "http://www.overpass-api.de/api/interpreter?data=" + window.encodeURIComponent(query);
 
   console.log(url);
