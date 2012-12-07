@@ -22,3 +22,29 @@ body { margin:0; padding:0; font-family: Sans-Serif; }
   border-radius: 8px;
   font-family: Sans-Serif;
 }
+
+.stat-container {
+  padding: 20px;
+}
+
+#total-edits {
+  font-weight: bold;
+  font-size: 14pt;
+}
+
+#top-users {
+  margin-top: 10px;
+  float: left;
+  width: 300px;
+}
+
+#recent-edits {
+  margin-top: 10px;
+  float: left;
+  width: 600px;
+}
+
+.item {
+  display: block;
+  padding: 2px;
+}
